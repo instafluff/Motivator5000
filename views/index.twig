@@ -1,0 +1,49 @@
+{% extends 'layout.twig' %}
+
+{% block body %}
+  <h1>{{title}}</h1>
+  <form>
+    <input id="image-url" type="url" placeholder="Image URL" size="50">
+    <br/>
+    <input id="quote-text" type="text" placeholder="Enter Quote" size="50">
+    <br/>
+    <input id="author-text" type="text" placeholder="Enter Author" size="50">
+  </form>
+  <button id="download-btn">Generate Image!</button>
+  <br/><br/>
+  <div class="motivation">
+    <img id="motivation-img" src="images/helena-lopes-483429-unsplash.jpg">
+    <!-- <h2><span>why the fluff did you wake me up for<br/>- Neo_TA</span></h2> -->
+    <!-- <h2><span>Everything is always fine<br/>- Yukin_</span></h2> -->
+    <h1><div><i id="motivation-quote">don't wear your bad hair day, own it !!</i><br/><small>- <span id="motivation-author">sparky_pugwash</span></small></div></h1></div>
+  <div id="motivation-canvas"></div>
+  <script type="text/javascript">
+    $(document).ready(() => {
+      $("#motivation-img").attr("src", $("#image-url").val());
+      $("#motivation-quote").text($("#quote-text").val());
+      $("#motivation-author").text($("#author-text").val());
+
+      $("#image-url").on('input propertychange paste', () => {
+        $("#motivation-img").attr("src", $("#image-url").val());
+      });
+      $("#quote-text").on('input propertychange paste', () => {
+        $("#motivation-quote").text($("#quote-text").val());
+      });
+      $("#author-text").on('input propertychange paste', () => {
+        $("#motivation-author").text($("#author-text").val());
+      });
+      $("#download-btn").on('click', () => {
+        // html2canvas(document.querySelector(".motivation"), {
+        //   onrendered: function(canvas) {
+        //       return Canvas2Image.saveAsPNG(canvas);
+        //   }
+        // });
+        html2canvas(document.querySelector(".motivation"), {
+          allowTaint: true,
+        }).then(function(canvas) {
+          $("#motivation-canvas").html(canvas);
+        });
+      });
+    });
+  </script>
+{% endblock %}
